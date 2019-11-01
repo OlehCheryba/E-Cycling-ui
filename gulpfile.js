@@ -35,7 +35,7 @@ gulp.task('default', () => {
       .pipe(gulp.dest('./public/css'));
   });
 
-  gulp.watch('./src/js/**/*.js', () => {
+  gulp.watch('./src/index.js', () => {
    return gulp.src(jsFiles)
       .pipe(jsx({
         factory: 'React.createClass'
