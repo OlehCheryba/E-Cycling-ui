@@ -1,7 +1,9 @@
 const SET_PRODUCTS = 'SET_PRODUCTS';
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 
 const initialState = {
-  products: []
+  products: [],
+  currentPage: 1
 }
 
 const productsReducer = (state = initialState, action) => {
@@ -12,14 +14,22 @@ const productsReducer = (state = initialState, action) => {
         products: action.products
       }
     }
+    case SET_CURRENT_PAGE: {
+      return {
+        ...state,
+        currentPage: action.pageNumber
+      }
+    }
     default:
       return state;
   }
 };
 
-export const setProductsAC = products => ({
-  type: SET_PRODUCTS,
-  products
+export const setProducts = products => ({
+  type: SET_PRODUCTS, products
+});
+export const setCurrentPage = pageNumber => ({
+  type: SET_CURRENT_PAGE, pageNumber
 });
 
 export default productsReducer;

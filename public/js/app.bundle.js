@@ -434,15 +434,10 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    setProducts: function setProducts(products) {
-      dispatch(Object(_redux_products_reducer__WEBPACK_IMPORTED_MODULE_3__["setProductsAC"])(products));
-    }
-  };
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps)(ProductsContainer));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, {
+  setProducts: _redux_products_reducer__WEBPACK_IMPORTED_MODULE_3__["setProducts"],
+  setCurrentPage: _redux_products_reducer__WEBPACK_IMPORTED_MODULE_3__["setCurrentPage"]
+})(ProductsContainer));
 
 /***/ }),
 
@@ -581,12 +576,13 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_
 /*!***************************************!*\
   !*** ./src/redux/products-reducer.js ***!
   \***************************************/
-/*! exports provided: setProductsAC, default */
+/*! exports provided: setProducts, setCurrentPage, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setProductsAC", function() { return setProductsAC; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setProducts", function() { return setProducts; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setCurrentPage", function() { return setCurrentPage; });
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -594,8 +590,10 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var SET_PRODUCTS = 'SET_PRODUCTS';
+var SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 var initialState = {
-  products: []
+  products: [],
+  currentPage: 1
 };
 
 var productsReducer = function productsReducer() {
@@ -610,15 +608,28 @@ var productsReducer = function productsReducer() {
         });
       }
 
+    case SET_CURRENT_PAGE:
+      {
+        return _objectSpread({}, state, {
+          currentPage: action.pageNumber
+        });
+      }
+
     default:
       return state;
   }
 };
 
-var setProductsAC = function setProductsAC(products) {
+var setProducts = function setProducts(products) {
   return {
     type: SET_PRODUCTS,
     products: products
+  };
+};
+var setCurrentPage = function setCurrentPage(pageNumber) {
+  return {
+    type: SET_CURRENT_PAGE,
+    pageNumber: pageNumber
   };
 };
 /* harmony default export */ __webpack_exports__["default"] = (productsReducer);

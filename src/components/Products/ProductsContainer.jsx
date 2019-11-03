@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Products from './Products.jsx';
 import { connect } from 'react-redux';
-import { setProductsAC } from '../../redux/products-reducer';
+import { setProducts, setCurrentPage } from '../../redux/products-reducer';
 
 class ProductsContainer extends Component {
   componentDidMount() {
@@ -23,12 +23,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setProducts: products => {
-      dispatch(setProductsAC(products));
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductsContainer);
+export default connect(
+  mapStateToProps, 
+  { setProducts, setCurrentPage }
+)(ProductsContainer);
