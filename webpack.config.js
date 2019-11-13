@@ -13,35 +13,16 @@ module.exports = {
   },
   module: {
     rules: [
+      { 
+        test: /\.jsx?$/, 
+        exclude: /node_modules/,
+        loader: 'babel-loader', 
+      },
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
         use: {
           loader: "ts-loader"
-        }
-      },
-      {
-        test: /\.[jt]sx?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            plugins: [
-              "@babel/plugin-proposal-class-properties"
-            ],
-            presets: [
-              ['@babel/preset-env', {
-                targets: {
-                  ie: '11',
-                  edge: '15',
-                  safari: '10',
-                  firefox: '50',
-                  chrome: '49',
-                },
-              }],
-              '@babel/preset-react',
-            ],
-          },
         }
       },
       {

@@ -8,22 +8,22 @@ function Footer() {
       <Row>
         <Col>
           <h2>Ми у соцмережах</h2>
-          <a href="https://www.instagram.com/" target="_blank">
+          <a href="https://www.instagram.com/" rel="noopener noreferrer" target="_blank">
             <img width={24} src="img/ikon-instagram.png" alt="Інстаграм"/>
             <span> Instagram</span>
           </a>
           <br/>
-          <a href="https://www.facebook.com/"  target="_blank">
+          <a href="https://www.facebook.com/" rel="noopener noreferrer" target="_blank">
             <img width={24} src="img/ikon-facebook.png" alt="Фейсбук"/>
             <span> Facebook</span>
           </a>
           <br/>
-          <a href="https://www.linkedin.com/" target="_blank">
+          <a href="https://www.linkedin.com/" rel="noopener noreferrer" target="_blank">
             <img width={24} src="img/ikon-linkedin.png" alt="ЛінкедІн"/>
             <span> LinkedIn</span>
           </a>
           <br/>
-          <a href="https://twitter.com/" target="_blank">
+          <a href="https://twitter.com/" rel="noopener noreferrer" target="_blank">
             <img width={24} src="img/ikon-twitter.png" alt="Твіттер"/>
             <span> Twitter</span>
           </a>
