@@ -1,0 +1,26 @@
+import { productsAPI } from "../../api/api.js";
+
+const SET_PRODUCT_INFO = 'SET_PRODUCT_INFO';
+
+const initialState = {
+  productInfo: null
+}
+
+const productReducer = (state = initialState, action) => {
+  switch(action.type) {
+    case SET_PRODUCT_INFO: 
+      return { ...state, productInfo: action.product }
+    default:
+      return state;
+  }
+};
+
+export const setProductInfo = product => ({ type: SET_PRODUCT_INFO, product });
+
+export const getProductInfo = (productId) => dispatch => {
+  productsAPI.getProductInfo(productId).then(product => {
+    dispatch(setProductInfo(product));
+  });
+};
+
+export default productReducer;

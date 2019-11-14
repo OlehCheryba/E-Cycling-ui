@@ -6,7 +6,7 @@ const Product = ({ product }) => {
   return (
     <Col xs={6} md={4}>
       <Card>
-        <NavLink to={'/item/' + product._id}>
+        <NavLink to={'/products/' + product._id}>
           <Card.Img variant='top' src={'img/' + product.fileName} />
         </NavLink>
         <Card.Body>

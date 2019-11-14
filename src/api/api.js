@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const authAPI = {
   me() {
     return fetch(`http://localhost:3000/auth/me`, {
@@ -32,6 +34,13 @@ export const authAPI = {
 export const productsAPI = {
   getProducts(pageNumber, pageSize) {
     return fetch(`http://localhost:3000/products?page=${pageNumber}&size=${pageSize}`, {
+      withCredentials: true,
+      credentials: 'include'
+    })
+      .then(res => res.json());
+  },
+  getProductInfo(productId) {
+    return fetch(`http://localhost:3000/products/${productId}`, {
       withCredentials: true,
       credentials: 'include'
     })

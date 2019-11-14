@@ -1,9 +1,9 @@
-import { productsAPI } from "../api/api.js";
+import { productsAPI } from "../../api/api.js";
 
 const SET_PRODUCTS = 'SET_PRODUCTS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const TOGGLE_IS_FETCHING= 'TOGGLE_IS_FETCHING';
-const SET_TOTAL_PRODUCTS_COUNT = 'SET_TOTAL_PRODUCTS_COUNT'
+const SET_TOTAL_PRODUCTS_COUNT = 'SET_TOTAL_PRODUCTS_COUNT';
 
 const initialState = {
   products: [],
@@ -21,13 +21,13 @@ const productsReducer = (state = initialState, action) => {
         products: action.products
       }
     case SET_CURRENT_PAGE: {
-      return { ...state, currentPage: action.currentPage}
+      return { ...state, currentPage: action.currentPage }
     }
     case SET_TOTAL_PRODUCTS_COUNT: {
-      return { ...state, totalProductsCount: action.count}
+      return { ...state, totalProductsCount: action.count }
     }
     case TOGGLE_IS_FETCHING: {
-      return { ...state, isFetching: action.isFetching}
+      return { ...state, isFetching: action.isFetching }
     }
     default:
       return state;

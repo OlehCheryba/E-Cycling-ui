@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Route, withRouter } from "react-router-dom";
-import SignInContainer from './components/Login/SignInContainer.jsx';
+import LoginContainer from './components/Login/LoginContainer.jsx';
 import HeaderContainer from './components/Header/HeaderContainer.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import { connect } from 'react-redux';
 import ProductsContainer from './components/Products/ProductsContainer.jsx';
-import { initializeApp } from './redux/app-reducer';
+import { initializeApp } from './redux/reducers/app-reducer';
 import {compose} from "redux";
 import { Container } from 'react-bootstrap';
 import AdminPanelContainer from './components/AdminPanel/AdminPanelContainer.jsx';
-import ItemContainer from './components/Item/ItemContainer.jsx';
+import ProductPageContainer from './components/ProductPage/ProductPageContainer.jsx';
 
 class App extends Component {
   componentDidMount() {
@@ -24,9 +24,9 @@ class App extends Component {
         <HeaderContainer/>
         <Container>
           <Route exact path='/' render={() => <ProductsContainer />}/>
-          <Route exact path='/signin' render={() => <SignInContainer />}/>
+          <Route exact path='/login' render={() => <LoginContainer />}/>
           <Route exact path='/admin' render={() => <AdminPanelContainer />}/>
-          <Route path='/item/:itemId?' render={() => <ItemContainer />}/>
+          <Route exact path='/products/:productId?' render={() => <ProductPageContainer />}/>
         </Container>
         <Footer/>
       </>  

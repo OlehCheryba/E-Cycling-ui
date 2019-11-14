@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Products from './Products.jsx';
 import { connect } from 'react-redux';
-import { getProducts } from '../../redux/products-reducer';
+import { getProducts } from '../../redux/reducers/products-reducer';
 
 class ProductsContainer extends Component {
   componentDidMount() {
