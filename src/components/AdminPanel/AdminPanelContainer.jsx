@@ -1,11 +1,17 @@
 import React from 'react';
 import AdminPanel from './AdminPanel';
+import { connect } from 'react-redux';
+import { addProduct } from '../../redux/reducers/admin-reducer';
 
 
-const AdminPanelContainer = () => {
+const AdminPanelContainer = (props) => {
   return (
-    <AdminPanel />
+    <AdminPanel {...props} />
   )
 }
 
-export default AdminPanelContainer;
+const mapStateToProps = (state) => ({
+
+})
+
+export default connect(mapStateToProps, { addProduct })(AdminPanelContainer);

@@ -17,10 +17,12 @@ const productReducer = (state = initialState, action) => {
 
 export const setProductInfo = product => ({ type: SET_PRODUCT_INFO, product });
 
-export const getProductInfo = (productId) => dispatch => {
-  productsAPI.getProductInfo(productId).then(product => {
-    dispatch(setProductInfo(product));
-  });
+export const requestProductInfo = (productId) => async(dispatch) => {
+  const product = await productsAPI.getProductInfo(productId);
+  dispatch(setProductInfo(product));
 };
+/*export const orderProduct = (productId, p) => (dispatch) => {
+  productsAPI.orderProduct(productId)
+}*/
 
 export default productReducer;

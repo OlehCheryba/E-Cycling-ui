@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import Products from './Products.jsx';
 import { connect } from 'react-redux';
-import { getProducts } from '../../redux/reducers/products-reducer';
+import { requestProducts } from '../../redux/reducers/products-reducer';
 
 class ProductsContainer extends Component {
   componentDidMount() {
-    this.props.getProducts(this.props.currentPage, this.props.pageSize);
+    this.props.requestProducts(this.props.currentPage, this.props.pageSize);
   }
 
   onPageChanged = (pageNumber) => {
-    this.props.getProducts(pageNumber, this.props.pageSize);
+    this.props.requestProducts(pageNumber, this.props.pageSize);
   }
 
   render() {
@@ -40,5 +40,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps, 
-  { getProducts }
+  { requestProducts }
 )(ProductsContainer);

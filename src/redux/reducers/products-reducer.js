@@ -39,7 +39,7 @@ export const setCurrentPage = currentPage => ({type: SET_CURRENT_PAGE, currentPa
 export const setTotalProductsCount = totalProductsCount => ({type: SET_TOTAL_PRODUCTS_COUNT, count: totalProductsCount });
 export const toggleIsFetching = isFetching => ({type: TOGGLE_IS_FETCHING, isFetching });
 
-export const getProducts = (pageNumber, pageSize) => dispatch => {
+export const requestProducts = (pageNumber, pageSize) => dispatch => {
   dispatch(toggleIsFetching(true));
   productsAPI.getProducts(pageNumber, pageSize).then(data => {
     dispatch(toggleIsFetching(false));

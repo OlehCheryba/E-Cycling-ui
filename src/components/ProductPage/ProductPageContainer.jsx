@@ -3,11 +3,11 @@ import ProductPage from './ProductPage';
 import { compose } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
-import { getProductInfo } from '../../redux/reducers/product-reducer';
+import { requestProductInfo } from '../../redux/reducers/product-reducer';
 
 class ProductPageContainer extends Component {
   refreshProductInfo() {
-    this.props.getProductInfo(this.props.match.params.productId);
+    this.props.requestProductInfo(this.props.match.params.productId);
   }
   componentDidMount() {
     this.refreshProductInfo();
@@ -31,5 +31,5 @@ const mapStateToProps = (state) => ({
 
 export default compose(
   withRouter,
-  connect(mapStateToProps, { getProductInfo })
+  connect(mapStateToProps, { requestProductInfo })
 )(ProductPageContainer)

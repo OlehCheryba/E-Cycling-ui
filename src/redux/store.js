@@ -4,10 +4,16 @@ import appReducer from "./reducers/app-reducer";
 import productReducer from "./reducers/product-reducer";
 import { combineReducers, createStore, compose, applyMiddleware } from "redux";
 import thunkMiddleware from 'redux-thunk';
+import adminReducer from "./reducers/admin-reducer";
+import customersReducer from "./reducers/customers-reducer";
+import customerReducer from "./reducers/customer-reducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const reducers = combineReducers({
+  customerPage: customerReducer,
+  customersPage: customersReducer,
+  adminPanel: adminReducer,
   productPage: productReducer,
   productsPage: productsReducer,
   auth: authReducer,

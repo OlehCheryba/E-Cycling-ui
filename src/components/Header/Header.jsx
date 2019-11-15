@@ -17,7 +17,7 @@ const Header = ({ login, isAuth, logout, userId, role }) => {
             <NavLink className="mx-2 my-auto" to="/admin">Admin panel</NavLink>
           )} 
           {isAuth && <NavDropdown title={login} id="collasible-nav-dropdown">
-            <NavDropdown.Item href={"/profile/" + userId}>Profile</NavDropdown.Item>
+            <NavDropdown.Item href={"/customers/" + userId}>Profile</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
             <NavDropdown.Divider />
