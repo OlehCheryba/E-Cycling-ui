@@ -18,8 +18,8 @@ const productReducer = (state = initialState, action) => {
 export const setProductInfo = product => ({ type: SET_PRODUCT_INFO, product });
 
 export const requestProductInfo = (productId) => async(dispatch) => {
-  const product = await productsAPI.getProductInfo(productId);
-  dispatch(setProductInfo(product));
+  const { data } = await productsAPI.getProductInfo(productId);
+  dispatch(setProductInfo(data));
 };
 /*export const orderProduct = (productId, p) => (dispatch) => {
   productsAPI.orderProduct(productId)

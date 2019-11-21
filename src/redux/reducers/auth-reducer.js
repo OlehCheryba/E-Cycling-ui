@@ -29,8 +29,8 @@ export const setAuthUserData = (userId, email, login, role, isAuth) => ({
 
 export const requestAuthUserData = () => async dispatch => {
   try {
-    let { data: {_id, email, login, role} } = await authAPI.me();
-    dispatch(setAuthUserData(_id, email, login, role, true));
+    const { data: { id, email, login, role } } = await authAPI.me();
+    dispatch(setAuthUserData(id, email, login, role, true));
   } catch(e) {}
 }
 export const login = (email, password) => async (dispatch) => {
@@ -38,7 +38,9 @@ export const login = (email, password) => async (dispatch) => {
   dispatch(requestAuthUserData());
 }
 export const logout = () => async (dispatch) => {
-  await authAPI.logout();
+  try {
+    await authAPI.logout();
+  } catch (e) {}
   dispatch(setAuthUserData(null, null, null, null, false));
 }
 

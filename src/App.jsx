@@ -8,10 +8,13 @@ import ProductsContainer from './components/Products/ProductsContainer';
 import { initializeApp } from './redux/reducers/app-reducer';
 import {compose} from "redux";
 import { Container } from 'react-bootstrap';
-import AdminPanelContainer from './components/AdminPanel/AdminPanelContainer.jsx';
 import ProductPageContainer from './components/ProductPage/ProductPageContainer.jsx';
 import CustomersContainer from './components/Customers/CustomersContainer.jsx';
 import CustomerPageContainer from './components/CustomerPage/CustomerPageContainer.jsx';
+import withSuspense from './hoc/withSuspense.jsx';
+import AppDrawerContainer from './components/AppDrawer/AppDrawerContainer.jsx';
+import Preloader from './components/common/Preloader.jsx';
+const AdminPanelContainer = React.lazy(() => import('./components/AdminPanel/AdminPanelContainer.jsx'));
 
 class App extends Component {
   componentDidMount() {
@@ -19,20 +22,21 @@ class App extends Component {
   }
   render() {
     if (!this.props.initialized) {
-      return <b>Load</b>
+      return <Preloader />
     }
     return (
       <>
-        <HeaderContainer/>
+        <HeaderContainer />
+        <AppDrawerContainer /> 
         <Container>
           <Switch>
             <Route exact path='/' render={() => <ProductsContainer />}/>
-            <Route exact path='/products/:productId?' render={() => <ProductPageContainer />}/>
+            <Route path='/products/:productId?' render={() => <ProductPageContainer />}/>
             <Route exact path='/customers' render={() => <CustomersContainer />}/>
-            <Route exact path='/customers/:customerId?' render={() => <CustomerPageContainer />}/>
-            <Route exact path='/login' render={() => <LoginContainer />}/>
-            <Route exact path='/admin' render={() => <AdminPanelContainer />}/>
-            <Route exact path='*' render={() => <b>404 Not found</b>}/>
+            <Route path='/customers/:customerId?' render={() => <CustomerPageContainer />}/>
+            <Route path='/login' render={() => <LoginContainer />}/>
+            <Route path='/admin' render={withSuspense(AdminPanelContainer)}/>
+            <Route path='*' render={() => <b>404 Not found</b>}/>
           </Switch>
         </Container>
         <Footer/>

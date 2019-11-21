@@ -1,22 +1,19 @@
 import React from 'react';
 import { Row } from 'react-bootstrap';
 import Customer from './Customer.jsx';
+import Paginator from '../common/Paginator.jsx';
 
-const Customers = (props) => {
-  let pagesCount = Math.ceil(props.totalCustomersCount / props.pageSize);
-  let pages = [];
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i);
-  }
+const Customers = ({ totalCustomersCount, onPageChanged, currentPage, pageSize, customers }) => {
   return (
     <>
-      {pages.map(p => (
-        <span key={p} onClick={() => {props.onPageChanged(p)}}>
-          {p}
-        </span>
-      ))}
-      <Row>
-        {props.customers.map(el => <Customer customer={el} key={el._id}/>)}
+      <Paginator 
+        totalItemsCount={totalCustomersCount}
+        onPageChanged={onPageChanged} 
+        currentPage={currentPage}
+        pageSize={pageSize}
+      />
+      <Row> 
+        {customers.map(el => <Customer customer={el} key={el.id}/>)}
       </Row>
     </>
   )

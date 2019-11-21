@@ -1,35 +1,137 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import Badge from '@material-ui/core/Badge';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import MenuIcon from '@material-ui/icons/Menu';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import CartContainer from '../Cart/CartContainer';
 
-const Header = ({ login, isAuth, logout, userId, role }) => {
+const useStyles = makeStyles(theme => ({
+  grow: {
+    flexGrow: 1
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'block',
+    },
+  },
+  sectionDesktop: {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+    },
+  },
+  sectionMobile: {
+    display: 'flex',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
+  },
+}));
+
+
+const Header = ({ login, isAuth, logout, userId, role, handleDrawerOpen }) => {
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const isProfileMenuOpen = Boolean(anchorEl);
+
+  const handleProfileMenuOpen = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleProfileMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const menuId = 'primary-search-account-menu';
+  const renderProfileMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isProfileMenuOpen}
+      onClose={handleProfileMenuClose}
+    >
+      <MenuItem>
+        <NavLink to={"/customers/" + userId}>Profile</NavLink>
+      </MenuItem>
+      <MenuItem>
+        <NavLink to={"/customers/" + userId}>lal</NavLink>
+      </MenuItem>
+      <MenuItem onClick={() => {
+        logout();
+        handleProfileMenuClose();
+      }}>
+        Logout
+      </MenuItem>
+    </Menu>
+  ); 
+
   return (
-    <Navbar bg="light" expand="md" className="">
-      <Navbar.Brand>
-        <NavLink className="mx-2 my-auto" to="/">E-Cycling</NavLink>
-      </Navbar.Brand>
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto">
-          <NavLink className="mx-2 my-auto" to="/">Products</NavLink>
-          <NavLink className="mx-2 my-auto" to="/vacancies">Vacancies</NavLink>
-          <NavLink className="mx-2 my-auto" to="/customers">Customers</NavLink>
-          {(role === 'owner' || role === 'admin') && (
-            <NavLink className="mx-2 my-auto" to="/admin">Admin panel</NavLink>
-          )} 
-          {isAuth && <NavDropdown title={login} id="collasible-nav-dropdown">
-            <NavDropdown.Item href={"/customers/" + userId}>Profile</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
-          </NavDropdown>} 
-          {!isAuth && <Button className="mx-2 my-auto" type="button">
-            <NavLink className="text-white" to="/login">Login</NavLink>
-          </Button>}
-        </Nav>
-      </Navbar.Collapse>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-    </Navbar>
+    <div className={classes.grow}>
+      <AppBar position='static'>
+        <Toolbar>
+          <IconButton
+            edge="start"
+            onClick={handleDrawerOpen}
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="open drawer"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography className={classes.title} variant="h6" noWrap>
+            <NavLink to='/' className="text-white">E-Cycling</NavLink>
+          </Typography>
+          <div className={classes.grow} />  
+          <div className={classes.sectionDesktop}>
+            <NavLink className="mx-3 my-auto text-white" to="/">Products</NavLink>
+            <NavLink className="mx-3 my-auto text-white" to="/vacancies">Vacancies</NavLink>
+            <NavLink className="mx-3 my-auto text-white" to="/customers">Customers</NavLink>
+            {(role === 'owner' || role === 'admin') && (
+              <NavLink className="mx-3 my-auto text-white" to="/admin">Admin panel</NavLink>
+            )} 
+          </div>
+          <CartContainer />
+          <div className={classes.sectionDesktop}>
+            <IconButton color="inherit">
+              <Badge badgeContent={7} color="secondary">
+                <FavoriteIcon />
+              </Badge>
+            </IconButton>
+            {isAuth && (
+              <IconButton
+                edge="end"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+                className='my-auto'
+              >
+                {login}⮟
+              </IconButton>
+            )} 
+            {!isAuth && (
+              <NavLink className="my-auto mx-3 text-white" to="/login">Login</NavLink>
+            )}
+          </div>
+        </Toolbar>
+      </AppBar>
+      {renderProfileMenu}
+    </div>
   )
 }
 

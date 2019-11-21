@@ -39,13 +39,12 @@ export const setCurrentPage = currentPage => ({type: SET_CURRENT_PAGE, currentPa
 export const setTotalProductsCount = totalProductsCount => ({type: SET_TOTAL_PRODUCTS_COUNT, count: totalProductsCount });
 export const toggleIsFetching = isFetching => ({type: TOGGLE_IS_FETCHING, isFetching });
 
-export const requestProducts = (pageNumber, pageSize) => dispatch => {
+export const requestProducts = (pageNumber, pageSize) => async(dispatch) => {
   dispatch(toggleIsFetching(true));
-  productsAPI.getProducts(pageNumber, pageSize).then(data => {
-    dispatch(toggleIsFetching(false));
-    dispatch(setProducts(data.products));
-    dispatch(setTotalProductsCount(data.totalCount));
-  });
+  const { data } = await productsAPI.getProducts(pageNumber, pageSize);
+  dispatch(toggleIsFetching(false));
+  dispatch(setProducts(data.products));
+  dispatch(setTotalProductsCount(data.totalCount));
 };
 
 export default productsReducer;

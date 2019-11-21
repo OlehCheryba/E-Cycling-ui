@@ -2,10 +2,17 @@ import React  from 'react';
 import Header from './Header.jsx';
 import { connect } from 'react-redux';
 import { logout } from '../../redux/reducers/auth-reducer';
+import { toggleIsDrawerOpen } from '../../redux/reducers/app-reducer';
 
-const HeaderContainer = (props) => {
+const HeaderContainer = ({ toggleIsDrawerOpen, ...props}) => {
+  const handleDrawerOpen = () => {
+    toggleIsDrawerOpen(true);
+  }
   return (
-    <Header {...props} />
+    <Header 
+      {...props} 
+      handleDrawerOpen={handleDrawerOpen}
+    />
   )
 }
 
@@ -18,5 +25,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { logout }
+  { logout, toggleIsDrawerOpen }
 )(HeaderContainer)

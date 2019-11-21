@@ -1,22 +1,19 @@
 import React from 'react';
 import { Row } from 'react-bootstrap';
 import Product from './Product.jsx';
+import Paginator from '../common/Paginator.jsx';
 
-const Products = props => {
-  let pagesCount = Math.ceil(props.totalProductsCount / props.pageSize);
-  let pages = [];
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i);
-  }
+const Products = ({ totalProductsCount, onPageChanged, currentPage, pageSize, products, addToCart }) => {
   return (
     <>
-      {pages.map(p => (
-        <span key={p} onClick={() => {props.onPageChanged(p)}}>
-          {p}
-        </span>
-      ))}
+      <Paginator 
+        totalItemsCount={totalProductsCount}
+        onPageChanged={onPageChanged} 
+        currentPage={currentPage}
+        pageSize={pageSize}
+      />
       <Row>
-        {props.products.map(el => <Product product={el} key={el._id}/>)}
+        {products.map(el => <Product addToCart={addToCart} product={el} key={el.id}/>)}
       </Row>
     </>
   )

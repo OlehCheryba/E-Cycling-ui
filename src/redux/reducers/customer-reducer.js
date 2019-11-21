@@ -18,8 +18,8 @@ const customerReducer = (state = initialState, action) => {
 export const setCustomerInfo = customer => ({ type: SET_CUSTOMER_INFO, customer });
 
 export const requestCustomerInfo = (customerId) => async(dispatch) => {
-  const customer = await customersAPI.getCustomerInfo(customerId);
-  dispatch(setCustomerInfo(customer));
+  const { data } = await customersAPI.getCustomerInfo(customerId);
+  dispatch(setCustomerInfo(data));
 };
 
 export default customerReducer;

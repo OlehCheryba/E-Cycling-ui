@@ -12,8 +12,10 @@ class ProductPageContainer extends Component {
   componentDidMount() {
     this.refreshCustomerInfo();
   }
-  componentDidUpdate() {
-    this.refreshCustomerInfo();
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.customerId !== prevProps.match.params.customerId ) {
+      this.refreshCustomerInfo();
+    }
   }
   render() {
     return (

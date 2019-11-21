@@ -40,13 +40,12 @@ export const setCurrentPage = currentPage => ({type: SET_CURRENT_PAGE, currentPa
 export const setTotalCustomersCount = totalCustomersCount => ({type: SET_TOTAL_CUSTOMERS_COUNT, count: totalCustomersCount });
 export const toggleIsFetching = isFetching => ({type: TOGGLE_IS_FETCHING, isFetching });
 
-export const requestCustomers = (pageNumber, pageSize) => dispatch => {
+export const requestCustomers = (pageNumber, pageSize) => async(dispatch) => {
   dispatch(toggleIsFetching(true));
-  customersAPI.getCustomers(pageNumber, pageSize).then(data => {
-    dispatch(toggleIsFetching(false));
-    dispatch(setCustomers(data.customers));
-    dispatch(setTotalCustomersCount(data.totalCount));
-  });
+  const { data } = await customersAPI.getCustomers(pageNumber, pageSize);
+  dispatch(toggleIsFetching(false));
+  dispatch(setCustomers(data.customers));
+  dispatch(setTotalCustomersCount(data.totalCount));
 };
 
 export default customersReducer;
