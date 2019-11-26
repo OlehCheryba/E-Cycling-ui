@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Products from './Products.jsx';
 import { connect } from 'react-redux';
 import { requestProducts } from '../../redux/reducers/products-reducer';
-import { addToCart } from '../../redux/reducers/cart-reducer';
+import { putCartProduct } from '../../redux/reducers/cart-reducer';
 
 class ProductsContainer extends Component {
   componentDidMount() {
@@ -23,7 +23,7 @@ class ProductsContainer extends Component {
           pageSize={this.props.pageSize}
           currentPage={this.props.currentPage}
           onPageChanged={this.onPageChanged}
-          addToCart={this.props.addToCart}
+          putCartProduct={this.props.putCartProduct}
         />
       </>
     );
@@ -42,5 +42,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps, 
-  { requestProducts, addToCart }
+  { requestProducts, putCartProduct }
 )(ProductsContainer);

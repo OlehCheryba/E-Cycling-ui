@@ -1,8 +1,11 @@
-import {requestAuthUserData} from "./auth-reducer";
+import { requestCart } from "./cart-reducer";
+import { requestCustomerData } from "./customer-reducer";
 
 const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS';
-const TOGGLE_IS_DRAWER_OPEN = 'TOGGLE_IS_DRAWER_OPEN';
-const TOGGLE_IS_CART_OPEN = 'TOGGLE_IS_CART_OPEN';
+const OPEN_DRAWER = 'OPEN_DRAWER';
+const CLOSE_DRAWER = 'CLOSE_DRAWER';
+const OPEN_CART = 'OPEN_CART';
+const CLOSE_CART = 'CLOSE_CART';
 
 const initialState = {
   initialized: false,
@@ -11,16 +14,26 @@ const initialState = {
 }
 
 const appReducer = (state = initialState, action) => {
-  switch(action.type) {
-    case TOGGLE_IS_DRAWER_OPEN:
+  switch (action.type) {
+    case OPEN_DRAWER:
       return {
         ...state,
-        isDrawerOpen: action.isDrawerOpen
+        isDrawerOpen: true
       }
-    case TOGGLE_IS_CART_OPEN:
+    case CLOSE_DRAWER:
       return {
         ...state,
-        isCartOpen: action.isCartOpen
+        isDrawerOpen: false
+      }
+    case OPEN_CART:
+      return {
+        ...state,
+        isCartOpen: true
+      }
+    case CLOSE_CART:
+      return {
+        ...state,
+        isCartOpen: false
       }
     case INITIALIZED_SUCCESS:
       return {
@@ -33,11 +46,16 @@ const appReducer = (state = initialState, action) => {
 };
 
 export const initializedSuccess = () => ({ type: INITIALIZED_SUCCESS });
-export const toggleIsDrawerOpen = (isDrawerOpen) => ({ type: TOGGLE_IS_DRAWER_OPEN, isDrawerOpen });
-export const toggleIsCartOpen = (isCartOpen) => ({ type: TOGGLE_IS_CART_OPEN, isCartOpen });
+export const openDrawer = () => ({ type: OPEN_DRAWER });
+export const closeDrawer = () => ({ type: CLOSE_DRAWER });
+export const openCart = () => ({ type: OPEN_CART });
+export const closeCart = () => ({ type: CLOSE_CART });
 
 export const initializeApp = () => (dispatch) => {
-  dispatch(requestAuthUserData())
+  Promise.all([
+    dispatch(requestCustomerData()),
+    dispatch(requestCart())
+  ])
     .then(() => {
       dispatch(initializedSuccess());
     });

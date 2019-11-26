@@ -7,7 +7,7 @@ const initialState = {
 }
 
 const productReducer = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case SET_PRODUCT_INFO: 
       return { ...state, productInfo: action.product }
     default:
@@ -19,10 +19,7 @@ export const setProductInfo = product => ({ type: SET_PRODUCT_INFO, product });
 
 export const requestProductInfo = (productId) => async(dispatch) => {
   const { data } = await productsAPI.getProductInfo(productId);
-  dispatch(setProductInfo(data));
+  dispatch(setProductInfo(data.product));
 };
-/*export const orderProduct = (productId, p) => (dispatch) => {
-  productsAPI.orderProduct(productId)
-}*/
 
 export default productReducer;

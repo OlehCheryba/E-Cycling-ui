@@ -3,7 +3,7 @@ import { Row } from 'react-bootstrap';
 import Product from './Product.jsx';
 import Paginator from '../common/Paginator.jsx';
 
-const Products = ({ totalProductsCount, onPageChanged, currentPage, pageSize, products, addToCart }) => {
+const Products = ({ totalProductsCount, onPageChanged, currentPage, pageSize, products, putCartProduct }) => {
   return (
     <>
       <Paginator 
@@ -13,7 +13,7 @@ const Products = ({ totalProductsCount, onPageChanged, currentPage, pageSize, pr
         pageSize={pageSize}
       />
       <Row>
-        {products.map(el => <Product addToCart={addToCart} product={el} key={el.id}/>)}
+        {products.map(el => <Product putCartProduct={putCartProduct} product={el} key={el.id}/>)}
       </Row>
     </>
   )

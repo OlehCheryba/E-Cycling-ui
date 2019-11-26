@@ -1,31 +1,25 @@
 import React from 'react';
 import AppDrawer from './AppDrawer';
 import { connect } from 'react-redux';
-import { toggleIsDrawerOpen } from '../../redux/reducers/app-reducer';
+import { closeDrawer } from '../../redux/reducers/app-reducer';
 import { logout } from '../../redux/reducers/auth-reducer';
 
-const AppDrawerContainer = ({ toggleIsDrawerOpen, ...props }) => {
-  const handleDrawerClose = () => {
-    toggleIsDrawerOpen(false);
-  }
-
+const AppDrawerContainer = (props) => {
   return (
     <AppDrawer
       {...props}
-      handleDrawerClose={handleDrawerClose}
     />
   )
 }
 
 const mapStateToProps = (state) => ({
   isDrawerOpen: state.app.isDrawerOpen,
-  login: state.auth.login,
+  login: state.customer.login,
   isAuth: state.auth.isAuth,
-  role: state.auth.role,
-  userId: state.auth.userId
+  role: state.customer.role
 })
 
 export default connect(
   mapStateToProps,
-  { toggleIsDrawerOpen, logout }
+  { closeDrawer, logout }
 )(AppDrawerContainer)

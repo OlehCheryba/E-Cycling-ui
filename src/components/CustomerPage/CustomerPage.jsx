@@ -1,11 +1,11 @@
 import React from 'react';
 
-const CustomerPage = ({ customerId, customerInfo }) => {
+const CustomerPage = ({ login, role, id }) => {
   return (
     <>
-      <p>CustomerPage {customerId}</p>
-      <h1>{customerInfo.login}</h1>
-     <b>Role {customerInfo.role}</b>
+      <p>Page for {id}</p>
+      <h1>Login {login}</h1>
+     <b>Role {role}</b>
     </>
   )
 }

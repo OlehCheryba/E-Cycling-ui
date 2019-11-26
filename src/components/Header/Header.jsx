@@ -9,8 +9,8 @@ import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import CartContainer from '../Cart/CartContainer';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import ProfileMenu from './ProfileMenu';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Header = ({ login, isAuth, logout, userId, role, handleDrawerOpen }) => {
+const Header = ({ login, isAuth, logout, role, totalAmount, openDrawer, openCart }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -55,44 +55,22 @@ const Header = ({ login, isAuth, logout, userId, role, handleDrawerOpen }) => {
   };
 
   const menuId = 'primary-search-account-menu';
-  const renderProfileMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isProfileMenuOpen}
-      onClose={handleProfileMenuClose}
-    >
-      <MenuItem>
-        <NavLink to={"/customers/" + userId}>Profile</NavLink>
-      </MenuItem>
-      <MenuItem>
-        <NavLink to={"/customers/" + userId}>lal</NavLink>
-      </MenuItem>
-      <MenuItem onClick={() => {
-        logout();
-        handleProfileMenuClose();
-      }}>
-        Logout
-      </MenuItem>
-    </Menu>
-  ); 
 
   return (
     <div className={classes.grow}>
       <AppBar position='static'>
         <Toolbar>
-          <IconButton
-            edge="start"
-            onClick={handleDrawerOpen}
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
+          <div className={classes.sectionMobile}>
+            <IconButton
+              edge="start"
+              onClick={openDrawer}
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="open drawer"
+            >
+              <MenuIcon />
+            </IconButton>
+          </div>
           <Typography className={classes.title} variant="h6" noWrap>
             <NavLink to='/' className="text-white">E-Cycling</NavLink>
           </Typography>
@@ -100,18 +78,16 @@ const Header = ({ login, isAuth, logout, userId, role, handleDrawerOpen }) => {
           <div className={classes.sectionDesktop}>
             <NavLink className="mx-3 my-auto text-white" to="/">Products</NavLink>
             <NavLink className="mx-3 my-auto text-white" to="/vacancies">Vacancies</NavLink>
-            <NavLink className="mx-3 my-auto text-white" to="/customers">Customers</NavLink>
             {(role === 'owner' || role === 'admin') && (
               <NavLink className="mx-3 my-auto text-white" to="/admin">Admin panel</NavLink>
             )} 
           </div>
-          <CartContainer />
+          <IconButton onClick={openCart} color="inherit">
+            <Badge badgeContent={totalAmount} color="secondary">
+              <ShoppingBasketIcon />
+            </Badge>
+          </IconButton>
           <div className={classes.sectionDesktop}>
-            <IconButton color="inherit">
-              <Badge badgeContent={7} color="secondary">
-                <FavoriteIcon />
-              </Badge>
-            </IconButton>
             {isAuth && (
               <IconButton
                 edge="end"
@@ -130,7 +106,13 @@ const Header = ({ login, isAuth, logout, userId, role, handleDrawerOpen }) => {
           </div>
         </Toolbar>
       </AppBar>
-      {renderProfileMenu}
+      <ProfileMenu
+        id={menuId}
+        anchorEl={anchorEl}
+        handleProfileMenuClose={handleProfileMenuClose}
+        logout={logout}
+        isProfileMenuOpen={isProfileMenuOpen}
+      />
     </div>
   )
 }

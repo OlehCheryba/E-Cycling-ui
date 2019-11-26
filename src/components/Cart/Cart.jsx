@@ -1,14 +1,16 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Modal, IconButton, Badge } from '@material-ui/core';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import { Modal } from '@material-ui/core';
+import CartProduct from './CartProduct';
 
 const useStyles = makeStyles(theme => ({
   paper: {
+    overflow: 'auto',
     position: 'fixed',
-    top: '50%',
+    top: '5%',
+    bottom: '5%',
     left: '50%',
-    transform: 'translate(-50%, -50%)',
+    transform: 'translateX(-50%)',
     width: '80%',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
@@ -17,37 +19,33 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Cart = ({ items }) => {
+const Cart = ({ products, totalPrice, isCartOpen, closeCart, deleteCartProducts, putCartProduct, deleteCartProduct }) => {
   const classes = useStyles();
-
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const itemsCount = Object.keys(items).length
 
   return (
     <>
-      <IconButton onClick={handleOpen} color="inherit">
-        <Badge badgeContent={itemsCount} color="secondary">
-          <ShoppingBasketIcon/>
-        </Badge>
-      </IconButton>
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={isCartOpen}
+        onClose={closeCart}
       >
         <div className={classes.paper}>
-          <h2>Text in a modal</h2>
+          <button onClick={closeCart}>Go back</button>
+          <h2>Cart</h2>
+          <div>
+            {products.map((product) => (
+              <CartProduct 
+                key={product.id}
+                product={product} 
+                deleteCartProduct={deleteCartProduct}
+                putCartProduct={putCartProduct}
+              />)
+            )}
+          </div>
           <p>
-            {JSON.stringify(items)}
+            Total price: {totalPrice}
           </p>
+          <button onClick={closeCart}>Close cart</button>
+          <button onClick={deleteCartProducts}>Clear cart</button>
         </div>
       </Modal>
     </>

@@ -2,28 +2,25 @@ import React  from 'react';
 import Header from './Header.jsx';
 import { connect } from 'react-redux';
 import { logout } from '../../redux/reducers/auth-reducer';
-import { toggleIsDrawerOpen } from '../../redux/reducers/app-reducer';
+import { openDrawer } from '../../redux/reducers/app-reducer';
+import { openCart } from './../../redux/reducers/app-reducer';
 
-const HeaderContainer = ({ toggleIsDrawerOpen, ...props}) => {
-  const handleDrawerOpen = () => {
-    toggleIsDrawerOpen(true);
-  }
+const HeaderContainer = (props) => {
   return (
     <Header 
-      {...props} 
-      handleDrawerOpen={handleDrawerOpen}
+      {...props}
     />
   )
 }
 
 const mapStateToProps = (state) => ({
-  login: state.auth.login,
-  userId: state.auth.userId,
+  login: state.customer.login,
   isAuth: state.auth.isAuth,
-  role: state.auth.role
+  role: state.customer.role,
+  totalAmount: state.cart.totalAmount
 })
 
 export default connect(
   mapStateToProps,
-  { logout, toggleIsDrawerOpen }
+  { logout, openDrawer, openCart }
 )(HeaderContainer)

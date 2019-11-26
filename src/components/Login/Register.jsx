@@ -4,30 +4,41 @@ import * as Yup from "yup";
 import { NavLink, Redirect } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
+  login: Yup.string()
+    .max(100, "Too Long!")
+    .required("Required"),
   email: Yup.string()
     .email("Must be an email address")
     .max(100, "Too Long!")
     .required("Required"),
   password: Yup.string()
     .max(100, "Too Long!")
+    .required("Required"),
+  repeatedPassword: Yup.string()
+    .max(100, "Too Long!")
     .required("Required")
 });
 
-const Login = ({ isAuth, login }) => {
+const Register = ({ isAuth, register }) => {
   if (isAuth) {
     return <Redirect to="/"/>
   }
   return (
     <>
-      <h2>Login</h2>
+      <h2>Register</h2>
       <Formik
         initialValues={{
-          email: "",
-          password: ""
+          login: '',
+          email: '',
+          password: '',
+          repeatedPassword: ''
         }}
         validationSchema={validationSchema}
-        onSubmit={({ email, password }, { setSubmitting, resetForm }) => {
-          login(email, password);
+        onSubmit={({ login, email, password, repeatedPassword }, { setSubmitting, resetForm }) => {
+          if (password !== repeatedPassword) {
+            return alert('Passwords don\'t matches');
+          }
+          register(login, email, password);
         }}
       >
         {({
@@ -40,7 +51,19 @@ const Login = ({ isAuth, login }) => {
         }) => (
           <form onSubmit={handleSubmit}>
             <div className="input-row">
-              <label>Email</label>
+              <label>Login</label>
+              <input
+                type="login"
+                name="login"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.login}
+                className={touched.login && errors.login ? "has-error" : null}
+              />
+            </div>
+            
+            <div className="input-row">
+            <label>Email</label>
               <input
                 type="email"
                 name="email"
@@ -64,18 +87,30 @@ const Login = ({ isAuth, login }) => {
             </div>
 
             <div className="input-row">
+              <label>Repeat password</label>
+              <input
+                type="password"
+                name="repeatedPassword"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.repeatedPassword}
+                className={touched.repeatedPassword && errors.repeatedPassword ? "has-error" : null}
+              />
+            </div>
+
+            <div className="input-row">
               <button type="submit">
-                LOG IN
+                REGISTER
               </button>
             </div>
           </form>
         )}
       </Formik>
-      <NavLink to='/register'>
-        Don't have an account?
+      <NavLink to='/login'>
+        Have an account?
       </NavLink>
     </>
   )
 }
 
-export default Login
+export default Register

@@ -7,7 +7,7 @@ const initialState = {
 }
 
 const adminReducer = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case SET_ORDERS:
       return {
         ...state,
@@ -20,8 +20,8 @@ const adminReducer = (state = initialState, action) => {
 
 export const setOrders = (orders) => ({ type: SET_ORDERS, orders });
 
-export const addProduct = (name, price) => async (dispatch) => {
-  productsAPI.addProduct(name, price);
+export const addProduct = (name, price, photo) => async (dispatch) => {
+  productsAPI.addProduct(name, price, photo);
 }
 
 export default adminReducer;

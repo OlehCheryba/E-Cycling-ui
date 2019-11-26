@@ -1,47 +1,44 @@
 import { authAPI } from "../../api/api";
+import { requestCart } from "./cart-reducer";
+import { setCustomerData, requestCustomerData } from "./customer-reducer";
 
-const SET_USER_DATA = ' SET_USER_DATA';
+const SET_IS_AUTH = 'SET_IS_AUTH';
 
 const initialState = {
-  userId: null,
-  email: null,
-  login: null,
-  role: 'guest',
   isAuth: false
 }
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-      case SET_USER_DATA:
-          return {
-              ...state,
-              ...action.payload
-          }
-      default:
-          return state;
+    case SET_IS_AUTH:
+      return {
+          ...state,
+          isAuth: action.isAuth
+      }
+    default:
+      return state;
   }
 }
 
-export const setAuthUserData = (userId, email, login, role, isAuth) => ({
-  type: SET_USER_DATA, 
-  payload: {userId, email, login, role, isAuth}
-});
+export const setIsAuth = (isAuth) => ({ type: SET_IS_AUTH, isAuth });
 
-export const requestAuthUserData = () => async dispatch => {
-  try {
-    const { data: { id, email, login, role } } = await authAPI.me();
-    dispatch(setAuthUserData(id, email, login, role, true));
-  } catch(e) {}
+export const register = (login, email, password) => async (dispatch) => {
+  await authAPI.register(login, email, password);
+  await dispatch(requestCustomerData());
+  await dispatch(requestCart());
 }
 export const login = (email, password) => async (dispatch) => {
   await authAPI.login(email, password);
-  dispatch(requestAuthUserData());
+  await dispatch(requestCustomerData());
+  await dispatch(requestCart());
 }
 export const logout = () => async (dispatch) => {
   try {
     await authAPI.logout();
+    dispatch(setIsAuth(false));
+    dispatch(setCustomerData({ role: 'guest' }));
+    dispatch(requestCart());
   } catch (e) {}
-  dispatch(setAuthUserData(null, null, null, null, false));
 }
 
 export default authReducer;

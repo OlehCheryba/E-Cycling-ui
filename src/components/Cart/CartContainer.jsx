@@ -1,29 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Cart from './Cart';
 import { connect } from 'react-redux';
-import { requestCartItems } from '../../redux/reducers/cart-reducer';
-import { toggleIsCartOpen } from './../../redux/reducers/app-reducer';
+import { closeCart } from './../../redux/reducers/app-reducer';
+import { deleteCartProducts, putCartProduct, deleteCartProduct } from './../../redux/reducers/cart-reducer';
 
-class CartContainer extends Component {
-  componentDidMount() {
-    this.props.requestCartItems();
-  }
-  
-  render() {
-    return (
-      <Cart 
-        {...this.props}
-      />
-    )
-  }
+const CartContainer = (props) => {
+  return (
+    <Cart 
+      {...props}
+    />
+  )
 }
 
 const mapStateToProps = (state) => ({
-  items: state.cart.items,
+  products: state.cart.products,
+  totalPrice: state.cart.totalPrice,
   isCartOpen: state.app.isCartOpen
 }) 
 
 export default connect(
   mapStateToProps,   
-  { requestCartItems, toggleIsCartOpen }
+  { closeCart, deleteCartProducts, putCartProduct, deleteCartProduct }
 )(CartContainer)

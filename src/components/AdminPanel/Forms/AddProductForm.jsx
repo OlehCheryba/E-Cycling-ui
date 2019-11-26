@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { Formik } from "formik";
 import * as Yup from "yup";
 
@@ -10,16 +10,17 @@ const validationSchema = Yup.object().shape({
 });
 
 const AddProductForm = ({ addProduct }) => {
+  const fileNodeRef = createRef();
   return (
     <>
       <Formik
         initialValues={{
-          name: "",
-          price: ""
+          name: '',
+          price: ''
         }}
         validationSchema={validationSchema}
         onSubmit={({ name, price }, { setSubmitting, resetForm }) => {
-          addProduct(name, price);
+          addProduct(name, price, fileNodeRef.current.files[0]);
         }}
       >
         {({
@@ -45,6 +46,15 @@ const AddProductForm = ({ addProduct }) => {
                 name="price"
                 onChange={handleChange}
                 value={values.price}
+              />
+            </div>
+
+            <div className="input-row">
+              <label> Product image</label>
+              <input 
+                type='file' 
+                name='fileNode'
+                ref={fileNodeRef}
               />
             </div>
 

@@ -8,13 +8,13 @@ const SET_TOTAL_PRODUCTS_COUNT = 'SET_TOTAL_PRODUCTS_COUNT';
 const initialState = {
   products: [],
   currentPage: 1,
-  pageSize: 3,
+  pageSize: 5,
   totalProductsCount: 0,
   isFetching: false
 }
 
 const productsReducer = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case SET_PRODUCTS:
       return {
         ...state,

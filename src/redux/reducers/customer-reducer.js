@@ -1,25 +1,37 @@
 import { customersAPI } from "../../api/api.js";
+import { setIsAuth } from './auth-reducer';
 
-const SET_CUSTOMER_INFO = 'SET_CUSTOMER_INFO';
+const SET_CUSTOMER_DATA = 'SET_CUSTOMER_DATA';
 
 const initialState = {
-  customerInfo: null
+  id: null,
+  role: null,
+  login: null,
+  email: null
 }
 
 const customerReducer = (state = initialState, action) => {
-  switch(action.type) {
-    case SET_CUSTOMER_INFO: 
-      return { ...state, customerInfo: action.customer }
+  switch (action.type) {
+    case SET_CUSTOMER_DATA: 
+      return { 
+        ...state, 
+        ...action.customerData
+      }
     default:
       return state;
   }
 };
 
-export const setCustomerInfo = customer => ({ type: SET_CUSTOMER_INFO, customer });
+export const setCustomerData = (customerData) => ({ type: SET_CUSTOMER_DATA, customerData });
 
-export const requestCustomerInfo = (customerId) => async(dispatch) => {
-  const { data } = await customersAPI.getCustomerInfo(customerId);
-  dispatch(setCustomerInfo(data));
+export const requestCustomerData = () => async (dispatch) => {
+  try {
+  const { data } = await customersAPI.getCustomerData();
+  dispatch(setCustomerData(data));
+  dispatch(setIsAuth(true));
+  } catch (e) {
+    dispatch(setCustomerData({ role: 'guest' }));
+  }
 };
 
 export default customerReducer;

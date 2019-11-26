@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 import { requestProductInfo } from '../../redux/reducers/product-reducer';
-import { addToCart } from '../../redux/reducers/cart-reducer';
+import { putCartProduct } from '../../redux/reducers/cart-reducer';
 
 class ProductPageContainer extends Component {
   refreshProductInfo() {
@@ -19,7 +19,7 @@ class ProductPageContainer extends Component {
     }
   }
   handleOrder = () => {
-    this.props.addToCart(this.props.match.params.productId)
+    this.props.putCartProduct({ id: this.props.match.params.productId, amount: 1 });
   }
   render() {
     return (
@@ -38,5 +38,5 @@ const mapStateToProps = (state) => ({
 
 export default compose(
   withRouter,
-  connect(mapStateToProps, { requestProductInfo, addToCart })
+  connect(mapStateToProps, { requestProductInfo, putCartProduct })
 )(ProductPageContainer)

@@ -1,37 +1,26 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import CustomerPage from './CustomerPage';
-import { compose } from 'redux';
-import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
-import { requestCustomerInfo } from '../../redux/reducers/customer-reducer';
+import { requestCustomerData } from '../../redux/reducers/customer-reducer';
 
-class ProductPageContainer extends Component {
-  refreshCustomerInfo() {
-    this.props.requestCustomerInfo(this.props.match.params.customerId);
-  }
-  componentDidMount() {
-    this.refreshCustomerInfo();
-  }
-  componentDidUpdate(prevProps) {
-    if (this.props.match.params.customerId !== prevProps.match.params.customerId ) {
-      this.refreshCustomerInfo();
-    }
-  }
-  render() {
-    return (
-      <CustomerPage 
-        customerId={this.props.match.params.customerId}
-        customerInfo={this.props.customerInfo || {}}
-      />
-    )
-  }
+const ProductPageContainer = ({ requestCustomerData, ...props }) => {
+  useEffect(() => {
+    requestCustomerData();
+  });
+
+  return (
+    <CustomerPage 
+      {...props}
+    />
+  )
 }
 
 const mapStateToProps = (state) => ({
-  customerInfo: state.customerPage.customerInfo
+  login: state.customer.login,
+  role: state.customer.role,
+  id: state.customer.id 
 })
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps, { requestCustomerInfo })
+export default connect(
+  mapStateToProps, { requestCustomerData }
 )(ProductPageContainer)

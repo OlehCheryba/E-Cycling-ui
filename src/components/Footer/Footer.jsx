@@ -2,42 +2,42 @@ import React from 'react';
 import { Row, Container, Col } from 'react-bootstrap';
 
 
-function Footer() {
+const Footer = (props) => {
   return (
     <Container>
       <Row>
         <Col>
-          <h2>Ми у соцмережах</h2>
+          <h2>Social networks</h2>
           <a href="https://www.instagram.com/" rel="noopener noreferrer" target="_blank">
-            <img width={24} src="img/ikon-instagram.png" alt="Інстаграм"/>
+            <img width={24} src="img/ikon-instagram.png" alt="Instagram"/>
             <span> Instagram</span>
           </a>
           <br/>
           <a href="https://www.facebook.com/" rel="noopener noreferrer" target="_blank">
-            <img width={24} src="img/ikon-facebook.png" alt="Фейсбук"/>
+            <img width={24} src="img/ikon-facebook.png" alt="Facebook"/>
             <span> Facebook</span>
           </a>
           <br/>
           <a href="https://www.linkedin.com/" rel="noopener noreferrer" target="_blank">
-            <img width={24} src="img/ikon-linkedin.png" alt="ЛінкедІн"/>
+            <img width={24} src="img/ikon-linkedin.png" alt="LinkedIn"/>
             <span> LinkedIn</span>
           </a>
           <br/>
           <a href="https://twitter.com/" rel="noopener noreferrer" target="_blank">
-            <img width={24} src="img/ikon-twitter.png" alt="Твіттер"/>
+            <img width={24} src="img/ikon-twitter.png" alt="Twitter"/>
             <span> Twitter</span>
           </a>
         </Col>
         <Col>
-          <h2>Кoнтакти</h2>
+          <h2>Contacts</h2>
           <p>
-            м. Львів, Україна 98371
+            Lviv, Ukraine 98371
           </p>
           <p>
             +380-98-752-69-440
           </p>
           <p>
-            Безкоштовний номер:
+            Free number:
             <br/>
             0-800-690-0900
           </p>

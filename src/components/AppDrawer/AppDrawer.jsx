@@ -1,15 +1,12 @@
 import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
-import { IconButton, Badge } from '@material-ui/core';
-import { FavoriteIcon } from '@material-ui/icons/Favorite';
 import { NavLink } from 'react-router-dom';
-import CartContainer from '../Cart/CartContainer';
 import MenuItem from '@material-ui/core/MenuItem';
 
-const AppDrawer = ({ isDrawerOpen, handleDrawerClose, isAuth, role, login, logout, userId }) => {
+const AppDrawer = ({ isDrawerOpen, closeDrawer, isAuth, role, login, logout }) => {
   return (
     <Drawer
-      open={isDrawerOpen} onClose={handleDrawerClose} 
+      open={isDrawerOpen} onClose={closeDrawer} 
     > 
       <MenuItem>
         <NavLink className="mx-3" to="/">Products</NavLink>
@@ -20,11 +17,10 @@ const AppDrawer = ({ isDrawerOpen, handleDrawerClose, isAuth, role, login, logou
       <MenuItem>
         <NavLink className="mx-3" to="/customers">Customers</NavLink>
       </MenuItem>
-      <CartContainer /> 
       {isAuth && (
         <>
           <MenuItem>
-            <NavLink to={"/customers/" + userId}>Profile</NavLink>
+            <NavLink to={"/customer"}>Profile</NavLink>
           </MenuItem>
           {(role === 'owner' || role === 'admin') && (
             <MenuItem>
@@ -32,7 +28,7 @@ const AppDrawer = ({ isDrawerOpen, handleDrawerClose, isAuth, role, login, logou
             </MenuItem>
           )} 
           <MenuItem>
-            <NavLink to={"/customers/" + userId}>lal</NavLink>
+            <NavLink to={"/customer"}>lal</NavLink>
           </MenuItem>
           <MenuItem onClick={logout}>
             Logout
