@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, StrictMode } from 'react';
 import { Route, withRouter, Switch } from "react-router-dom";
 import LoginContainer from './components/Login/LoginContainer.jsx';
 import HeaderContainer from './components/Header/HeaderContainer.jsx';
@@ -10,7 +10,7 @@ import {compose} from "redux";
 import { Container } from 'react-bootstrap';
 import ProductPageContainer from './components/ProductPage/ProductPageContainer.jsx';
 import CustomerPageContainer from './components/CustomerPage/CustomerPageContainer.jsx';
-import withSuspense from './hoc/withSuspense.jsx';
+import withSuspense from './components/hoc/withSuspense.jsx';
 import AppDrawerContainer from './components/AppDrawer/AppDrawerContainer.jsx';
 import Preloader from './components/common/Preloader.jsx';
 import CartContainer from './components/Cart/CartContainer.jsx';
@@ -26,7 +26,7 @@ class App extends Component {
       return <Preloader />
     }
     return (
-      <>
+      <StrictMode>
         <HeaderContainer />
         <AppDrawerContainer /> 
         <CartContainer />
@@ -42,7 +42,7 @@ class App extends Component {
           </Switch>
         </Container>
         <Footer/>
-      </>  
+      </StrictMode>  
     )
   }
 }

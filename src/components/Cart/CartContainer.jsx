@@ -13,7 +13,7 @@ const CartContainer = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  products: state.cart.products,
+  cartProducts: state.cart.cartProducts,
   totalPrice: state.cart.totalPrice,
   isCartOpen: state.app.isCartOpen
 }) 

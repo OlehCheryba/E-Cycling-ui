@@ -17,9 +17,17 @@ const productReducer = (state = initialState, action) => {
 
 export const setProductInfo = product => ({ type: SET_PRODUCT_INFO, product });
 
-export const requestProductInfo = (productId) => async(dispatch) => {
-  const { data } = await productsAPI.getProductInfo(productId);
-  dispatch(setProductInfo(data.product));
+export const requestProductInfo = (productId) => async (dispatch, getState) => {
+  const { data: { product } } = await productsAPI.getProductInfo(productId);
+  const { cart: { cartProducts } } = getState();
+
+  product.inCart = Boolean(
+    cartProducts.find(
+      (cartProduct) => cartProduct.id === product.id
+    )
+  )
+
+  dispatch(setProductInfo(product));
 };
 
 export default productReducer;

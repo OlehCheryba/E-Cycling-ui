@@ -51,14 +51,12 @@ export const closeDrawer = () => ({ type: CLOSE_DRAWER });
 export const openCart = () => ({ type: OPEN_CART });
 export const closeCart = () => ({ type: CLOSE_CART });
 
-export const initializeApp = () => (dispatch) => {
-  Promise.all([
+export const initializeApp = () => async (dispatch) => {
+  await Promise.all([
     dispatch(requestCustomerData()),
     dispatch(requestCart())
-  ])
-    .then(() => {
-      dispatch(initializedSuccess());
-    });
+  ]);
+  dispatch(initializedSuccess());
 }
 
 export default appReducer;

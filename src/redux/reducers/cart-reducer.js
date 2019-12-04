@@ -3,7 +3,7 @@ import { cartAPI, productsAPI } from "../../api/api";
 const SET_CART_DATA = 'SET_CART_DATA';
 
 const initialState = {
-  products: [],
+  cartProducts: [],
   totalAmount: 0,
   totalPrice: 0
 }
@@ -13,7 +13,7 @@ const cartReducer = (state = initialState, action) => {
     case SET_CART_DATA: 
       return { 
         ...state, 
-        products: action.cart.products,
+        cartProducts: action.cart.cartProducts,
         totalAmount: action.cart.totalAmount,
         totalPrice: action.cart.totalPrice
       }
@@ -22,7 +22,7 @@ const cartReducer = (state = initialState, action) => {
   }
 };
 
-export const setCartData = (cart) => ({ type: SET_CART_DATA, cart });
+export const setCartData = cart => ({ type: SET_CART_DATA, cart });
 
 export const requestCart = () => async (dispatch) => {
   const { data } = await cartAPI.getCartProducts();
@@ -30,7 +30,7 @@ export const requestCart = () => async (dispatch) => {
     return;
   }
 
-  const filledProducts = await Promise.all(
+  const cartProducts = await Promise.all(
     data.products.map(async (product) => {
       const { data } = await productsAPI.getProductInfo(product.id);
       if (data) {
@@ -42,12 +42,12 @@ export const requestCart = () => async (dispatch) => {
     })
   );
 
-  const totalAmount = filledProducts.reduce(
+  const totalAmount = cartProducts.reduce(
     (sum, { amount }) => sum + amount, 0);
-  const totalPrice = filledProducts.reduce(
+  const totalPrice = cartProducts.reduce(
     (sum, { info: { price }, amount }) => sum + price * amount, 0);
 
-  dispatch(setCartData({ products: filledProducts, totalAmount, totalPrice }))
+  dispatch(setCartData({ cartProducts, totalAmount, totalPrice }))
 };
 export const deleteCartProducts = () => (dispatch) => {
   cartAPI.deleteCartProducts();

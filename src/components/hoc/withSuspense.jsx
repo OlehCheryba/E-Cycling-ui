@@ -1,5 +1,5 @@
 import React from "react";
-import Preloader from "../components/common/Preloader";
+import Preloader from "../common/Preloader";
 
 const withSuspense = (Component) => (props) => (
   <React.Suspense fallback={<Preloader />} >

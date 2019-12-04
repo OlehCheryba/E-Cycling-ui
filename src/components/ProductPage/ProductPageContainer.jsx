@@ -19,7 +19,7 @@ class ProductPageContainer extends Component {
     }
   }
   handleOrder = () => {
-    this.props.putCartProduct({ id: this.props.match.params.productId, amount: 1 });
+    this.props.putCartProduct({ id: this.props.productInfo.id, amount: 1 });
   }
   render() {
     return (

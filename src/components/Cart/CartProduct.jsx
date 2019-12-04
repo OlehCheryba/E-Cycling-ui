@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CartProduct = ({ product, putCartProduct, deleteCartProduct }) => {
+const CartProduct = ({ cartProduct, putCartProduct, deleteCartProduct }) => {
   const classes = useStyles();
   return (
     <div className={classes.card}>
@@ -33,47 +33,47 @@ const CartProduct = ({ product, putCartProduct, deleteCartProduct }) => {
         <IconButton 
           aria-label="delete item" 
           onClick={() => {
-            deleteCartProduct(product.id);
+            deleteCartProduct(cartProduct.id);
           }}
         >
           <HighlightOffIcon />
         </IconButton>
       </div>
-      <NavLink to={`products/${product.id}`}>
+      <NavLink to={`products/${cartProduct.id}`}>
         <img 
           className={classes.image}
-          src={`http://localhost:3000/images/${product.info.photoSrc || 'product-default.jpg'}`} 
+          src={`http://localhost:3000/images/${cartProduct.info.photoSrc || 'product-default.jpg'}`} 
         />
       </NavLink>
       <div>
-        <NavLink to={`products/${product.id}`}>
+        <NavLink to={`products/${cartProduct.id}`}>
           <h4 className={classes.productName}>
-            {product.info.name}
+            {cartProduct.info.name}
           </h4>
         </NavLink>
         <p>
-          {product.info.price}
+          {cartProduct.info.price}
         </p>
       </div>
       <div>
         <IconButton 
           aria-label="add to favorites"
           onClick={() => {
-            product.amount--;
-            if (product.amount === 0) {
-              return deleteCartProduct(product.id)
+            cartProduct.amount--;
+            if (cartProduct.amount === 0) {
+              return deleteCartProduct(cartProduct.id)
             }
-            putCartProduct(product);
+            putCartProduct(cartProduct);
           }}
         >
           <RemoveCircleOutlineIcon />
         </IconButton>
-        {product.amount}
+        {cartProduct.amount}
         <IconButton 
           aria-label="share"
           onClick={() => {
-            product.amount++;
-            putCartProduct(product);
+            cartProduct.amount++;
+            putCartProduct(cartProduct);
           }}
         >
           <ControlPointIcon />
@@ -84,7 +84,7 @@ const CartProduct = ({ product, putCartProduct, deleteCartProduct }) => {
           Price
         </p>
         <p>
-          {product.amount * product.info.price}
+          {cartProduct.amount * cartProduct.info.price}
         </p>
       </div>
     </div>

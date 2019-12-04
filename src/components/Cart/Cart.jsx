@@ -19,9 +19,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Cart = ({ products, totalPrice, isCartOpen, closeCart, deleteCartProducts, putCartProduct, deleteCartProduct }) => {
+const Cart = ({ cartProducts, totalPrice, isCartOpen, closeCart, deleteCartProducts, putCartProduct, deleteCartProduct }) => {
   const classes = useStyles();
-
+  debugger
   return (
     <>
       <Modal
@@ -32,10 +32,10 @@ const Cart = ({ products, totalPrice, isCartOpen, closeCart, deleteCartProducts,
           <button onClick={closeCart}>Go back</button>
           <h2>Cart</h2>
           <div>
-            {products.map((product) => (
+            {cartProducts.map((cartProduct) => (
               <CartProduct 
-                key={product.id}
-                product={product} 
+                key={cartProduct.id}
+                cartProduct={cartProduct} 
                 deleteCartProduct={deleteCartProduct}
                 putCartProduct={putCartProduct}
               />)
